@@ -8,15 +8,25 @@ module.exports = function check(string, config) {
       let openBracket = config[j][0];
       let closeBracket = config[j][1];
 
-      if (currentChar === openBracket) {
-        stack.push(closeBracket);
-        break;
-      } else if (currentChar === closeBracket) {
-        if (stack.length === 0 || stack[stack.length - 1] !== closeBracket) {
-          return false;
+      if (openBracket === closeBracket) {
+        if (currentChar === openBracket) {
+          if (stack.length === 0 || stack[stack.length - 1] !== openBracket) {
+            stack.push(openBracket);
+          } else {
+            stack.pop();
+          }
         }
-        stack.pop();
-        break;
+      } else {
+        if (currentChar === openBracket) {
+          stack.push(closeBracket);
+          break;
+        } else if (currentChar === closeBracket) {
+          if (stack.length === 0 || stack[stack.length - 1] !== closeBracket) {
+            return false;
+          }
+          stack.pop();
+          break;
+        }
       }
     }
   }
